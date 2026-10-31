@@ -771,19 +771,22 @@ child.Button = function(_, config)
     ClickBtn.MouseButton1Down:Connect(function() if not locked then Tween(Tile, {BackgroundTransparency = 0.45}, 0.08) end end)
     ClickBtn.MouseButton1Up:Connect(function() if not locked then Tween(Tile, {BackgroundTransparency = 0.65}, 0.08) end end)
     ClickBtn.MouseButton1Click:Connect(function() if not locked then callback() end end)
-local self = {}
-function self:UpdateText(t) TitleLbl.Text = tostring(t or "") end
-function self:SetVisible(v) Tile.Visible = v ~= false end
-function self:Lock(title) 
-    updateLock(true)
-    if title then 
-        lockLabel.Text = tostring(title) 
-        lockedTitle = title 
+
+    local self = {}
+    function self:UpdateText(t) TitleLbl.Text = tostring(t or "") end
+    function self:SetVisible(v) Tile.Visible = v ~= false end
+    function self:Lock(title) 
+        updateLock(true)
+        if title then 
+            lockLabel.Text = tostring(title) 
+            lockedTitle = title 
+        end
     end
-end
-function self:Unlock() updateLock(false) end
-function self:IsLocked() return locked end
-return self
+    function self:Unlock() updateLock(false) end
+    function self:IsLocked() return locked end
+    
+    return self
+end -- 👈 【核心修复】补上这行，闭合 child.Button 函数
 
 child.Toggle = function(_, config)
     config = safeConfig(config)
